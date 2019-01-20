@@ -1260,6 +1260,7 @@ void LedgerImpl::KillTimer(uint32_t timer_id) {
 }
 
 void LedgerImpl::OnConfirmationsTimer(uint32_t timer_id) {
+  bat_confirmations_->OnTimer(timer_id);
 }
 
 std::unique_ptr<confirmations::LogStream> LedgerImpl::Log(
