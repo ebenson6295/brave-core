@@ -124,6 +124,9 @@ class LedgerImpl : public ledger::Ledger,
   void SavePublishersList(const std::string& data);
   void LoadNicewareList(ledger::GetNicewareListCallback callback);
 
+  void SetConfirmationsWalletInfo(
+      const braveledger_bat_helper::WALLET_INFO_ST& wallet_info);
+
   void LoadLedgerState(ledger::LedgerCallbackHandler* handler);
   void LoadPublisherState(ledger::LedgerCallbackHandler* handler);
   void LoadPublisherList(ledger::LedgerCallbackHandler* handler);

@@ -196,15 +196,8 @@ void LedgerImpl::OnLedgerStateLoaded(ledger::Result result,
 
       OnWalletInitialized(ledger::Result::INVALID_LEDGER_STATE);
     } else {
-      DCHECK(!bat_confirmations_);
-      bat_confirmations_.reset(
-          confirmations::Confirmations::CreateInstance(ledger_client_));
-
       auto wallet_info = bat_state_->GetWalletInfo();
-      auto confirmations_wallet_info = GetConfirmationsWalletInfo(wallet_info);
-      bat_confirmations_->SetWalletInfo(
-          std::make_unique<confirmations::WalletInfo>(
-              confirmations_wallet_info));
+      SetConfirmationsWalletInfo(wallet_info);
 
       LoadPublisherState(this);
       bat_contribution_->OnStartUp();
@@ -219,6 +212,18 @@ void LedgerImpl::OnLedgerStateLoaded(ledger::Result result,
 
     OnWalletInitialized(result);
   }
+}
+
+void LedgerImpl::SetConfirmationsWalletInfo(
+    const braveledger_bat_helper::WALLET_INFO_ST& wallet_info) {
+  if (!bat_confirmations_) {
+    bat_confirmations_.reset(
+        confirmations::Confirmations::CreateInstance(ledger_client_));
+  }
+
+  auto confirmations_wallet_info = GetConfirmationsWalletInfo(wallet_info);
+  bat_confirmations_->SetWalletInfo(
+      std::make_unique<confirmations::WalletInfo>(confirmations_wallet_info));
 }
 
 void LedgerImpl::LoadPublisherState(ledger::LedgerCallbackHandler* handler) {
@@ -1034,9 +1039,7 @@ void LedgerImpl::SetWalletInfo(
     const braveledger_bat_helper::WALLET_INFO_ST& info) {
   bat_state_->SetWalletInfo(info);
 
-  auto confirmations_wallet_info = GetConfirmationsWalletInfo(info);
-  bat_confirmations_->SetWalletInfo(
-      std::make_unique<confirmations::WalletInfo>(confirmations_wallet_info));
+  SetConfirmationsWalletInfo(info);
 }
 
 const confirmations::WalletInfo LedgerImpl::GetConfirmationsWalletInfo(
