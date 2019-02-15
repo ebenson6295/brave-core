@@ -875,6 +875,9 @@ void BatPublishers::setBalanceReportItem(ledger::ACTIVITY_MONTH month,
     case ledger::ReportType::GRANT:
       report_info.grants_ = braveledger_bat_bignum::sum(report_info.grants_, probi);
       break;
+    case ledger::ReportType::ADS:
+      report_info.earning_from_ads_ = braveledger_bat_bignum::sum(report_info.earning_from_ads_, probi);
+      break;
     case ledger::ReportType::AUTO_CONTRIBUTION:
       report_info.auto_contribute_ = braveledger_bat_bignum::sum(report_info.auto_contribute_, probi);
       break;
