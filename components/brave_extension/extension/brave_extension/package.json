@@ -1,0 +1,24 @@
+{
+  "name": "brave-extension",
+  "version": "1.0.0",
+  "description": "Brave component extension",
+  "scripts": {
+    "dev": "node scripts/dev",
+    "build": "echo",
+    "compress": "node scripts/compress",
+    "compress-keygen": "crx keygen",
+    "clean": "rimraf build/ dev/ *.zip *.crx",
+    "lint": "tslint --project tsconfig.json '{app, test}/**/*.{ts,tsx}'",
+    "test-e2e": "cross-env NODE_ENV=test TS_NODE_TYPE_CHECK=true mocha ./test/setupApp.ts test/e2e/braveShieldsPanel.ts && mocha ./test/setupApp.ts",
+    "test-unit": "cross-env NODE_ENV=test TS_NODE_TYPE_CHECK=true mocha -r ignore-styles ./test/setupApp.ts test/app/**/**/**/*.{ts,tsx}",
+    "test-security": "npm audit",
+    "test-suite": "node ./scripts/tests.js"
+  },
+  "pre-push": {
+    "run": [
+      "lint"
+    ]
+  },
+  "author": "Brian Bondy <netzen@gmail.com>",
+  "license": "MPL-2.0"
+}
